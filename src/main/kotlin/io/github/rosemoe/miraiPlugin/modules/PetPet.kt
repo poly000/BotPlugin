@@ -28,21 +28,27 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
+private const val USE_CACHE = true;
+
 suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long) {
     val outputFile = "${userDirPath(id)}${File.separator}PetPet.gif"
     var generationSuccess = true
-    runInterruptible(Dispatchers.IO) {
-        getUserHead(url, id)
-        val head = "${userDirPath(id)}${File.separator}avator.jpg"
-        try {
-            Runtime.getRuntime()
-                   .exec(".${File.separator}petpet ${head} ${outputFile} 10")
-                   .waitFor()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            generationSuccess = false
-        }
+
+    if (!USE_CACHE || !File(outputFile).exists()) {
+      runInterruptible(Dispatchers.IO) {
+          getUserHead(url, id)
+          val head = "${userDirPath(id)}${File.separator}avator.jpg"
+          try {
+              Runtime.getRuntime()
+                     .exec(".${File.separator}petpet ${head} ${outputFile} 10")
+                     .waitFor()
+          } catch (e: Exception) {
+              e.printStackTrace()
+              generationSuccess = false
+          }
+       }
     }
+    
     if (generationSuccess) {
         group.sendMessage(group.uploadImageResource(File(outputFile)))
     }
@@ -56,8 +62,8 @@ operator fun <K, V> Map<K, V>.minus(x: K): V {
 private fun getUserHead(url: String, memberId: Long): File {
     return getTargetImage(
         url,
-        "${userDirPath(memberId)}${File.separator}avator.jpg",
-        false
+        "${userDirPath(memberId)}${File.separator}avatar.jpg",
+        USE_CACHE
     )
 }
 
