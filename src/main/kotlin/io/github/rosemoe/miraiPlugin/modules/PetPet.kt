@@ -51,7 +51,7 @@ suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long
     }
     
     if (generationSuccess) {
-        group.sendMessage(group.uploadImageResource(File(outputFile)))
+        group.sendMessage(group.uploadImageResource(outputFile))
     }
 }
 
