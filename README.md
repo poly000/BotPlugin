@@ -12,7 +12,7 @@ A plugin for [Mirai Console](https://github.com/mamoe/mirai-console) with image 
 * 使用 [petpet-rs] 生成gif，修复了黑色背景错误
 * PetPet 默认使用 `speed=1` 代替原来的 `speed=10`。speed粗略解释[见此][speed解释]
 * Petpet.gif 的缓存支持
-* PetPet默认启用缓存，已经加入在达到一小时时无视缓存（PetPet.gif，avator.jpg还没加）
+* PetPet默认启用缓存，已经加入在达到一小时时无视缓存（PetPet.gif，avator.jpg也加好了）
 
 ## 功能
 
