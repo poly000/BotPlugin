@@ -72,6 +72,7 @@ private fun getUserHead(url: String, memberId: Long): File {
 @Throws(IOException::class)
 private fun getTargetImage(url: String, pathname: String, isUseCache: Boolean = true): File {
     val file = File(pathname)
+	val time = System.currentTimeMillis()
     if (isUseCache && file.exists() && file.lastModified() - time < OUTDATE_THRESHOLD ) {
         return file
     }
