@@ -31,16 +31,17 @@ import java.net.URL
 private const val USE_CACHE = true;
 
 suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long) {
-    val outputFile = "${userDirPath(id)}${File.separator}PetPet.gif"
+    val outputFile = File("${userDirPath(id)}${File.separator}PetPet.gif")
     var generationSuccess = true
+	val time = System.currentTimeMillis()
 
-    if (!USE_CACHE || !File(outputFile).exists()) {
+    if (!USE_CACHE || !outputFile.exists() || outputFile.lastModified() - time >= 60*60*1000 ) {
       runInterruptible(Dispatchers.IO) {
           getUserHead(url, id)
           val head = "${userDirPath(id)}${File.separator}avator.jpg"
           try {
               Runtime.getRuntime()
-                     .exec(".${File.separator}petpet ${head} ${outputFile} 1")
+                     .exec(".${File.separator}petpet ${head} ${outputFile.getPath()} 1")
                      .waitFor()
           } catch (e: Exception) {
               e.printStackTrace()
