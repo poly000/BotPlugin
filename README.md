@@ -4,6 +4,16 @@
 
 A plugin for [Mirai Console](https://github.com/mamoe/mirai-console) with image sender,pixiv querying and more.
 
+## 修改
+
+[petpet-rs]: https://github.com/poly000/petpet-rs
+[speed解释]: https://github.com/Rosemoe/BotPlugin/issues/23#issue-965016523
+
+* 使用 [petpet-rs] 生成gif，修复了黑色背景错误
+* PetPet 默认使用 `speed=1` 代替原来的 `speed=10`。speed粗略解释[见此][speed解释]
+* Petpet.gif 的缓存支持
+* PetPet默认启用缓存，需要用户自己设置清理缓存目录，也许将来会加一个创建时间对比
+
 ## 功能
 
 * 发送本地图库的圖片(请手动下载赫图,另提供指令sendImage一次发送多张)(发送带有'图'和'来'的消息或者色图来图片(不知道这图我也没办法,你可以用图片ID发出去))
