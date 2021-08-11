@@ -14,6 +14,12 @@ A plugin for [Mirai Console](https://github.com/mamoe/mirai-console) with image 
 * Petpet.gif 的缓存支持
 * PetPet默认启用缓存，已经加入在达到2分钟时无视缓存（PetPet.gif，avator.jpg）（**注意不会自动清理**）
 
+## petpet-rs 部署
+
+请在 [petpet-rs](https://github.com/poly000/petpet-rs/release/latest) 下载对应平台的二进制，以及 `any-resourses.tar`
+
+并把 petpet 二进制文件（以 `petpet(.exe)` 命名）放在 `mirai` 运行的目录，`res` 中的文件放在此目录的同名子目录。
+
 ## 功能
 
 * 发送本地图库的圖片(请手动下载赫图,另提供指令sendImage一次发送多张)(发送带有'图'和'来'的消息或者色图来图片(不知道这图我也没办法,你可以用图片ID发出去))
