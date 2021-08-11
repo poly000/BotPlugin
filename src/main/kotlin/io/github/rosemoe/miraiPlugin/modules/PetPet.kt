@@ -36,7 +36,7 @@ suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long
     var generationSuccess = true
 	val time = System.currentTimeMillis()
 
-    if (!USE_CACHE || outputFile.lastModified() == 0 || outputFile.lastModified() - time >= OUTDATE_THRESHOLD ) {
+    if (!USE_CACHE || outputFile.lastModified() == 0L || outputFile.lastModified() - time >= OUTDATE_THRESHOLD ) {
       runInterruptible(Dispatchers.IO) {
           getUserHead(url, id)
           val head = "${userDirPath(id)}${File.separator}avator.jpg"
