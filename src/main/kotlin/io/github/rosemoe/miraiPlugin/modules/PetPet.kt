@@ -29,7 +29,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 private const val USE_CACHE = true;
-private const val OUTDATE_THRESHOLD = 60*60*1000; // 1 hour
+private const val OUTDATE_THRESHOLD = 2*60*1000; // 2 minutes
 
 suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long) {
     val outputFile = File("${userDirPath(id)}${File.separator}PetPet.gif")
@@ -40,11 +40,11 @@ suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long
       runInterruptible(Dispatchers.IO) {
           getUserHead(url, id)
           val head = "${userDirPath(id)}${File.separator}avator.jpg"
-          var process = Runtime.getRuntime().exec(".${File.separator}petpet ${head} ${outputFile} 10", arrayOf(["RUST_BACKTRACE=1"]))
+          var process = Runtime.getRuntime().exec(".${File.separator}petpet ${head} ${outputFile} 1", arrayOf(["RUST_BACKTRACE=1"]))
           try {
               if ( process.waitFor() != 0 ) {
                   generationSuccess = false
-                  var error = process.getErrorStream().readText()
+                  var error: String = process.getErrorStream().readText()
                   throw Exception(error)
               }
           } catch (e: Exception) {
