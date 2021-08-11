@@ -34,9 +34,9 @@ private const val OUTDATE_THRESHOLD = 60*60*1000; // 1 hour
 suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long) {
     val outputFile = File("${userDirPath(id)}${File.separator}PetPet.gif")
     var generationSuccess = true
-	val time = System.currentTimeMillis()
+    val time = System.currentTimeMillis()
 
-    if (!USE_CACHE || outputFile.lastModified() == 0L || outputFile.lastModified() - time >= OUTDATE_THRESHOLD ) {
+    if (!USE_CACHE || outputFile.lastModified() == 0L || time - outputFile.lastModified() >= OUTDATE_THRESHOLD ) {
       runInterruptible(Dispatchers.IO) {
           getUserHead(url, id)
           val head = "${userDirPath(id)}${File.separator}avator.jpg"
@@ -72,8 +72,9 @@ private fun getUserHead(url: String, memberId: Long): File {
 @Throws(IOException::class)
 private fun getTargetImage(url: String, pathname: String, isUseCache: Boolean = true): File {
     val file = File(pathname)
-	val time = System.currentTimeMillis()
-    if (isUseCache && file.exists() && file.lastModified() - time < OUTDATE_THRESHOLD ) {
+    val time = System.currentTimeMillis()
+    val lastModified = file.lastModified()
+    if (isUseCache && lastModified != 0L && time - lastModified < OUTDATE_THRESHOLD ) {
         return file
     }
     val connection = (URL(url).openConnection() as HttpURLConnection).apply {
