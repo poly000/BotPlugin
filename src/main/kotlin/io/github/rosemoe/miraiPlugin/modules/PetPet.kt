@@ -36,13 +36,14 @@ suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long
     var generationSuccess = true
     val time = System.currentTimeMillis()
 
-    if (!USE_CACHE || outputFile.lastModified() == 0L || time - outputFile.lastModified() >= OUTDATE_THRESHOLD ) {
+    if (!USE_CACHE || !outputFile.exists() || time - outputFile.lastModified() >= OUTDATE_THRESHOLD ) {
       runInterruptible(Dispatchers.IO) {
           getUserHead(url, id)
           val head = "${userDirPath(id)}${File.separator}avator.jpg"
           try {
               Runtime.getRuntime()
-                     .exec(".${File.separator}petpet ${head} ${outputFile.getPath()} 1")
+                     .exec(".${File.separator}petpet ${head} ${outputFile.getPath()} 1",
+                      "RUST_BACKTRACE=1")
                      .waitFor()
           } catch (e: Exception) {
               e.printStackTrace()
@@ -64,7 +65,7 @@ operator fun <K, V> Map<K, V>.minus(x: K): V {
 private fun getUserHead(url: String, memberId: Long): File {
     return getTargetImage(
         url,
-        "${userDirPath(memberId)}${File.separator}avatar.jpg",
+        "${userDirPath(memberId)}${File.separator}avator.jpg",
         USE_CACHE
     )
 }
@@ -72,9 +73,8 @@ private fun getUserHead(url: String, memberId: Long): File {
 @Throws(IOException::class)
 private fun getTargetImage(url: String, pathname: String, isUseCache: Boolean = true): File {
     val file = File(pathname)
-    val time = System.currentTimeMillis()
-    val lastModified = file.lastModified()
-    if (isUseCache && lastModified != 0L && time - lastModified < OUTDATE_THRESHOLD ) {
+    val time = System.currentTimeMillis() 
+    if (isUseCache && file.exists() && time - file.lastModified() < OUTDATE_THRESHOLD ) {
         return file
     }
     val connection = (URL(url).openConnection() as HttpURLConnection).apply {
