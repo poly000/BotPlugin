@@ -43,7 +43,7 @@ suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long
           try {
               Runtime.getRuntime()
                      .exec(".${File.separator}petpet ${head} ${outputFile.getPath()} 1",
-                      "RUST_BACKTRACE=1")
+                      ["RUST_BACKTRACE=1"])
                      .waitFor()
           } catch (e: Exception) {
               e.printStackTrace()
