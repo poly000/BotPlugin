@@ -21,6 +21,7 @@ package io.github.rosemoe.miraiPlugin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runInterruptible
 import net.mamoe.mirai.contact.Group
+import java.io.InputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -44,7 +45,7 @@ suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long
           try {
               if ( process.waitFor() != 0 ) {
                   generationSuccess = false
-                  var error: String = process.getErrorStream()<String>.readText()
+                  var error: String = process.getErrorStream().bufferedReader().readText()
                   throw Exception(error)
               }
           } catch (e: Exception) {
