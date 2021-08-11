@@ -42,7 +42,7 @@ suspend fun RosemoePlugin.generateGifAndSend(url: String, group: Group, id: Long
           val head = "${userDirPath(id)}${File.separator}avator.jpg"
           try {
               Runtime.getRuntime()
-                     .exec(".${File.separator}petpet ${head} ${outputFile.getPath()} 1")
+                     .exec(".${File.separator}petpet ${head} ${userDirPath(id)}${File.separator}PetPet.gif 1")
                      .waitFor()
           } catch (e: Exception) {
               e.printStackTrace()
