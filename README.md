@@ -177,20 +177,6 @@ R18画作将不会发送图片
 /sendImage <图片数目>
 ```
 
-### Ping
-
-```text
-/ping 后面和操作系统一样
-```
-
-### IP获取
-
-```text
-/ipList <网址>
-/ipList4 <网址>
-/ipList6 <网址>
-```
-
 ### 黑名单
 
 ```text
